@@ -4,18 +4,15 @@
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              x:Class="LunchRoulette.Views.LandingPage"
              Title="Lunch Roulette">
-  <StackLayout>
+  <StackLayout Padding="10">
     <StackLayout Padding="10">
       <maps:Map WidthRequest="320" HeightRequest="200"                            
               x:Name="MyMap"
               IsShowingUser="true"                 
               MapType="Street"/>
     </StackLayout>
-    <Button Text="Lunch!" Clicked="Button_Clicked"></Button>    
-    <!--<StackLayout Orientation="Horizontal">
-      <Button Text="Lunch!" Clicked="Button_Clicked"></Button>
-      <Button Text="Map" Clicked="Button_Map"></Button>
-    </StackLayout>-->
+    <Button Text="Lunch!" Clicked="Button_Clicked"></Button>             
+    <Button Text="Map" Clicked="Button_Map"></Button>
     <Label x:Name="Winner" TextColor="Red" FontAttributes="Bold"></Label>
     <ListView x:Name="chowList" SeparatorVisibility="None">
       <ListView.ItemTemplate>

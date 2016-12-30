@@ -21,6 +21,7 @@ namespace LunchRoulette.Views
         {
             this.service = new PlacesService();
             InitializeComponent();
+            //Task.Run(this.UpdateMap);
         }
 
         public async Task UpdateMap()
@@ -59,8 +60,7 @@ namespace LunchRoulette.Views
                 this.Winner.Text = "Winner: " + randomRestaurant.name;
                 MyMap.Pins.Add(new Pin()
                 {
-                    Position =
-                        new Position(randomRestaurant.geometry.location.lat, randomRestaurant.geometry.location.lng),
+                    Position = new Position(randomRestaurant.geometry.location.lat, randomRestaurant.geometry.location.lng),
                     Label = randomRestaurant.name
                 });
 

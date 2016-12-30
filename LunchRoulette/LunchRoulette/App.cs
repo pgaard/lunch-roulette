@@ -13,7 +13,8 @@ namespace LunchRoulette
     {
         public App()
         {
-            MainPage = new NavigationPage(new LandingPage());
+            MainPage = new NavigationPage(new LunchListPage());
+            //this.MainPage.ToolbarItems.Add(new ToolbarItem("Account", null, this.ToolbarItem_Lunches));
         }
 
         protected override void OnStart()
