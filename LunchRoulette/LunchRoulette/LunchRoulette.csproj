@@ -47,8 +47,8 @@
     <Compile Include="Services\LunchDatabase.cs" />
     <Compile Include="Services\LunchService.cs" />
     <Compile Include="Services\PlacesService.cs" />
-    <Compile Include="Views\LandingPage.xaml.cs">
-      <DependentUpon>LandingPage.xaml</DependentUpon>
+    <Compile Include="Views\DiscoverPage.xaml.cs">
+      <DependentUpon>DiscoverPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TabbedHomePage.xaml.cs">
       <DependentUpon>TabbedHomePage.xaml</DependentUpon>
@@ -138,7 +138,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\LandingPage.xaml">
+    <EmbeddedResource Include="Views\DiscoverPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

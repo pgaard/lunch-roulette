@@ -11,7 +11,7 @@ namespace LunchRoulette.Views
 {
     using Xamarin.Forms;
 
-    public partial class LandingPage : ContentPage
+    public partial class DiscoverPage : ContentPage
     {
         private PlacesService service;
         private LunchService lunchService;
@@ -19,7 +19,7 @@ namespace LunchRoulette.Views
         public ObservableCollection<Restaurant> Restaurants;
        
 
-        public LandingPage()
+        public DiscoverPage()
         {
             this.service = new PlacesService();
             this.lunchService = new LunchService();

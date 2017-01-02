@@ -13,7 +13,7 @@ namespace LunchRoulette.Views
         public TabbedHomePage()
         {
             InitializeComponent();
-            this.Children.Add(new LandingPage());
+            this.Children.Add(new DiscoverPage());
             this.Children.Add(new LunchListPage());
         }
     }
