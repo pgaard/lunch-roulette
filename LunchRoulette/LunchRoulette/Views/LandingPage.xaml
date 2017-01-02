@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              x:Class="LunchRoulette.Views.LandingPage"
-             Title="Lunch Roulette">
+             Title="Discover">
   <StackLayout Padding="10">
     <StackLayout Padding="10">
       <maps:Map WidthRequest="320" HeightRequest="200"                            
@@ -14,7 +14,7 @@
     <Button Text="Lunch!" Clicked="Button_Clicked"></Button>             
     <Button Text="Map" Clicked="Button_Map"></Button>
     <Label x:Name="Winner" TextColor="Red" FontAttributes="Bold"></Label>
-    <ListView x:Name="chowList" SeparatorVisibility="None">
+    <ListView x:Name="chowList" SeparatorVisibility="None" ItemSelected="Restaurant_Selected">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>

@@ -13,7 +13,7 @@ namespace LunchRoulette
     {
         public App()
         {
-            MainPage = new NavigationPage(new LunchListPage());
+            MainPage = new TabbedHomePage();
             //this.MainPage.ToolbarItems.Add(new ToolbarItem("Account", null, this.ToolbarItem_Lunches));
         }
 

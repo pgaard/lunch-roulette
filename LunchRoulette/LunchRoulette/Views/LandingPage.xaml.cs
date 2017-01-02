@@ -14,12 +14,15 @@ namespace LunchRoulette.Views
     public partial class LandingPage : ContentPage
     {
         private PlacesService service;
+        private LunchService lunchService;
 
         public ObservableCollection<Restaurant> Restaurants;
+       
 
         public LandingPage()
         {
             this.service = new PlacesService();
+            this.lunchService = new LunchService();
             InitializeComponent();
             //Task.Run(this.UpdateMap);
         }
@@ -71,6 +74,26 @@ namespace LunchRoulette.Views
         private async void Button_Map(object sender, EventArgs e)
         {
             await this.UpdateMap();
+        }
+
+        private async void Restaurant_Selected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var restaurant = e.SelectedItem as Restaurant;
+
+            if (restaurant != null)
+            {
+                var lunch = new Lunch()
+                {
+                    RestaurantName = restaurant.name,
+                    Address = restaurant.vicinity,
+                    GoogleId = restaurant.id,
+                    Date = DateTime.Now.Date
+                };
+
+                var id = await this.lunchService.Add(lunch);
+                 
+                await DisplayAlert("test", "Add lunch " + id, "OK");
+            }
         }
     }
 }
