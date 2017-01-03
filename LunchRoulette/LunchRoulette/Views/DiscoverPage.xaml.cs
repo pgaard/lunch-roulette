@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace LunchRoulette.Views
         private LunchService lunchService;
 
         public ObservableCollection<Restaurant> Restaurants;
-       
+
 
         public DiscoverPage()
         {
@@ -36,7 +37,7 @@ namespace LunchRoulette.Views
         public async Task<Position> GetCurrentPosition()
         {
             try
-            {   
+            {
                 var locator = CrossGeolocator.Current;
                 locator.DesiredAccuracy = 50;
                 var location = await locator.GetPositionAsync(10000);
@@ -52,25 +53,74 @@ namespace LunchRoulette.Views
 
         public async void Button_Clicked(object sender, EventArgs eventArgs)
         {
-            var restaurants = await this.service.GetRestaurants(this.MyMap.VisibleRegion.Center.Latitude, this.MyMap.VisibleRegion.Center.Longitude);
+            this.Spinner.IsRunning = true;
+            this.Spinner.IsVisible = true;
+            this.Winner.IsVisible = false;
+
+            var restaurants =
+                await
+                    this.service.GetRestaurants(this.MyMap.VisibleRegion.Center.Latitude,
+                        this.MyMap.VisibleRegion.Center.Longitude);
             if (restaurants != null && restaurants.results.Count > 0)
             {
-                this.Restaurants = new ObservableCollection<Restaurant>(restaurants.results);
+                var filtered = await FilterRestaurants(restaurants.results);
 
-                var rnd = new Random();
-                var randomRestaurant = restaurants.results[rnd.Next(0, restaurants.results.Count)];
+                this.Counts.Text = $"{filtered.Count} restaurants left out of {restaurants.results.Count}";                
 
-                this.Winner.Text = "Winner: " + randomRestaurant.name;
-                MyMap.Pins.Add(new Pin()
+                var winners = GetRandomRestaurants(filtered, 3);
+
+                MyMap.Pins.Clear();
+                foreach (var winner in winners)
                 {
-                    Position = new Position(randomRestaurant.geometry.location.lat, randomRestaurant.geometry.location.lng),
-                    Label = randomRestaurant.name
-                });
+                    MyMap.Pins.Add(new Pin()
+                    {
+                        Position =
+                            new Position(winner.geometry.location.lat, winner.geometry.location.lng),
+                        Label = winner.name,
+                        Type = PinType.Place
+                    });
+                }
 
+                this.Restaurants = new ObservableCollection<Restaurant>(winners);
                 chowList.ItemsSource = this.Restaurants;
-            }                        
+            }
+
+            this.Spinner.IsRunning = false;
+            this.Spinner.IsVisible = false;
+            this.Winner.IsVisible = true;
         }
-      
+
+        private async Task<List<Restaurant>> FilterRestaurants(List<Restaurant> restaurants)
+        {
+            var stopwords = new[] { "caribou" };
+            var previous = await lunchService.GetAll();
+
+            var filtered = restaurants.Where(r => !stopwords.Any(s => r.name.ToLower().Contains(s)) && previous.All(p => p.GoogleId != r.id));
+           
+            return filtered.ToList();
+        }
+
+        private List<Restaurant> GetRandomRestaurants(List<Restaurant> restaurants, int number)
+        {
+            if (restaurants.Count < number)
+            {
+                number = restaurants.Count;
+            }
+
+            var rnd = new Random();
+            var result = new List<Restaurant>();
+            while (result.Count < number)
+            {
+                var random = restaurants[rnd.Next(0, restaurants.Count)];
+                if (result.All(r => r.id != random.id))
+                {
+                    result.Add(random);
+                }
+            }
+
+            return result;
+        }
+
         private async void Button_Map(object sender, EventArgs e)
         {
             await this.UpdateMap();
@@ -79,20 +129,27 @@ namespace LunchRoulette.Views
         private async void Restaurant_Selected(object sender, SelectedItemChangedEventArgs e)
         {
             var restaurant = e.SelectedItem as Restaurant;
-
+           
             if (restaurant != null)
             {
-                var lunch = new Lunch()
+                if (await DisplayAlert("Choose", $"Are we really eating at {restaurant.name}?", "Yes", "No"))
                 {
-                    RestaurantName = restaurant.name,
-                    Address = restaurant.vicinity,
-                    GoogleId = restaurant.id,
-                    Date = DateTime.Now.Date
-                };
+                    var lunch = new Lunch()
+                    {
+                        RestaurantName = restaurant.name,
+                        Address = restaurant.vicinity,
+                        GoogleId = restaurant.id,
+                        Date = DateTime.Now.Date
+                    };
+                    var count = await this.lunchService.Add(lunch);
 
-                var id = await this.lunchService.Add(lunch);
-                 
-                await DisplayAlert("test", "Add lunch " + id, "OK");
+                    if (count == 0)
+                    {
+                        await DisplayAlert("Add", "Add failed!", "OK");
+                    }
+                }
+
+                // todo deselect
             }
         }
     }

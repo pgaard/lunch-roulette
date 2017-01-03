@@ -4,26 +4,30 @@
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              x:Class="LunchRoulette.Views.DiscoverPage"
              Title="Discover">
-  <StackLayout Padding="10">
-    <StackLayout Padding="10">
+  <StackLayout Padding="10,10,10,0">
+    <StackLayout Padding="0,10,10,0">
       <maps:Map WidthRequest="320" HeightRequest="200"                            
               x:Name="MyMap"
               IsShowingUser="true"                 
               MapType="Street"/>
     </StackLayout>
-    <Button Text="Lunch!" Clicked="Button_Clicked"></Button>             
-    <Button Text="Map" Clicked="Button_Map"></Button>
-    <Label x:Name="Winner" TextColor="Red" FontAttributes="Bold"></Label>
-    <ListView x:Name="chowList" SeparatorVisibility="None" ItemSelected="Restaurant_Selected">
+    <Button Text="Where Are We Eating?" Clicked="Button_Clicked" BackgroundColor="#4B244A" TextColor="White"></Button>             
+    <!--<Button Text="Map" Clicked="Button_Map"></Button>-->
+    <ActivityIndicator x:Name="Spinner"></ActivityIndicator>    
+    <StackLayout Orientation="Horizontal">
+      <Label x:Name="Winner" TextColor="Red" FontAttributes="Bold" Text="Choose One:" IsVisible="false"></Label>
+      <Label x:Name="Counts" FontSize="12" HorizontalOptions="EndAndExpand"></Label>
+    </StackLayout>
+    <ListView x:Name="chowList" SeparatorVisibility="None" ItemSelected="Restaurant_Selected" HasUnevenRows="True">      
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
-            <StackLayout>
+            <StackLayout BackgroundColor="#98C1D9"  Margin="5">
               <StackLayout Orientation="Horizontal">              
-                <Label Text="{Binding name}" FontAttributes="Bold"></Label>
+                <Label Text="{Binding name}" FontAttributes="Bold" TextColor="Black" FontSize="16"></Label>
                 <Label Text="{Binding price_level}"></Label>            
               </StackLayout> 
-              <Label Text="{Binding vicinity}" FontSize="10"></Label>
+              <Label Text="{Binding vicinity}" FontSize="12"></Label>
             </StackLayout>
           </ViewCell>
         </DataTemplate>

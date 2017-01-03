@@ -15,7 +15,12 @@ namespace LunchRoulette.Services
         public LunchDatabase(string dbPath)
         {
             database = new SQLiteAsyncConnection(dbPath);
-            //database.DropTableAsync<Lunch>().Wait();
+            database.CreateTableAsync<Lunch>().Wait();
+        }
+
+        public void DropTable()
+        {
+            database.DropTableAsync<Lunch>().Wait();
             database.CreateTableAsync<Lunch>().Wait();
         }
 

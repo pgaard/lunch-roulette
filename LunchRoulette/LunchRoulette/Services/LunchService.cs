@@ -31,10 +31,14 @@ namespace LunchRoulette.Services
             return await Database.GetItemsAsync();
         }
 
+        public void DeleteAll()
+        {
+            database.DropTable();
+        }
+
         public async Task<int> Add(Lunch lunch)
         {
             var id = await Database.SaveItemAsync(lunch);
-            lunch.Id = id;
             return id;
         }
 

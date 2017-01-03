@@ -13,8 +13,14 @@ namespace LunchRoulette
     {
         public App()
         {
-            MainPage = new TabbedHomePage();
-            //this.MainPage.ToolbarItems.Add(new ToolbarItem("Account", null, this.ToolbarItem_Lunches));
+            // https://coolors.co/98c1d9-6969b3-533a7b-4b244a-25171a
+            MainPage = new NavigationPage(new TabbedHomePage()
+            {
+                BarBackgroundColor = Color.FromHex("6969B3")
+            })
+            {
+                BarBackgroundColor = Color.FromHex("533A7B")
+            };
         }
 
         protected override void OnStart()
