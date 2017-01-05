@@ -9,7 +9,8 @@
       <maps:Map WidthRequest="320" HeightRequest="200"                            
               x:Name="MyMap"
               IsShowingUser="true"                 
-              MapType="Street"/>
+              MapType="Street"
+                />
     </StackLayout>
     <Button Text="Where Are We Eating?" Clicked="Button_Clicked" BackgroundColor="#4B244A" TextColor="White"></Button>             
     <!--<Button Text="Map" Clicked="Button_Map"></Button>-->

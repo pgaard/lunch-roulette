@@ -25,7 +25,13 @@ namespace LunchRoulette.Views
             this.service = new PlacesService();
             this.lunchService = new LunchService();
             InitializeComponent();
-            //Task.Run(this.UpdateMap);
+
+            // bug with map - needs delay
+            Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+            {
+                this.UpdateMap();
+                return false;
+            });
         }
 
         public async Task UpdateMap()
@@ -44,9 +50,9 @@ namespace LunchRoulette.Views
                 return new Position(location.Latitude, location.Longitude);
             }
             catch (Exception ex)
-            {
+            {                
                 var geoCoder = new Geocoder();
-                var location = await geoCoder.GetPositionsForAddressAsync("4916 40th Ave S Minneapolis MN 55417");
+                var location = await geoCoder.GetPositionsForAddressAsync("110 N 5th St, Minneapolis, MN 55401");
                 return location.FirstOrDefault();
             }
         }
@@ -56,6 +62,7 @@ namespace LunchRoulette.Views
             this.Spinner.IsRunning = true;
             this.Spinner.IsVisible = true;
             this.Winner.IsVisible = false;
+            this.chowList.IsVisible = false;
 
             var restaurants =
                 await
@@ -88,11 +95,12 @@ namespace LunchRoulette.Views
             this.Spinner.IsRunning = false;
             this.Spinner.IsVisible = false;
             this.Winner.IsVisible = true;
+            this.chowList.IsVisible = true;
         }
 
         private async Task<List<Restaurant>> FilterRestaurants(List<Restaurant> restaurants)
         {
-            var stopwords = new[] { "caribou" };
+            var stopwords = new[] { "caribou", "brass rail", "executive lounge" };
             var previous = await lunchService.GetAll();
 
             var filtered = restaurants.Where(r => !stopwords.Any(s => r.name.ToLower().Contains(s)) && previous.All(p => p.GoogleId != r.id));

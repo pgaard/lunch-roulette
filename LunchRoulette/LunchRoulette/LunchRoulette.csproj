@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Services\ILunchDatabase.cs" />
     <Compile Include="Views\LunchListPage.xaml.cs">
       <DependentUpon>LunchListPage.xaml</DependentUpon>
     </Compile>

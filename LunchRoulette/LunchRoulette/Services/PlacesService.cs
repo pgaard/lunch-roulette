@@ -17,7 +17,7 @@ namespace LunchRoulette.Services
 
         private readonly string googlePlacesApiKey;
 
-        private string Url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key={0}&location={1},{2}&rankby=distance&type=restaurant";
+        private const string Url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key={0}&location={1},{2}&rankby=distance&type=restaurant&opennow";
 
         public PlacesService()
         {
@@ -29,7 +29,7 @@ namespace LunchRoulette.Services
         {
             try
             {
-                var response = await this.client.GetAsync(new Uri(String.Format(this.Url, this.googlePlacesApiKey, latitude, longitude)));
+                var response = await this.client.GetAsync(new Uri(String.Format(Url, this.googlePlacesApiKey, latitude, longitude)));
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     var result = await response.Content.ReadAsStringAsync();

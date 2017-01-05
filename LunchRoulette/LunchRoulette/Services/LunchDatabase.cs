@@ -8,7 +8,7 @@ using SQLite;
 
 namespace LunchRoulette.Services
 {
-    public class LunchDatabase
+    public class LunchDatabase : ILunchDatabase
     {
         private SQLiteAsyncConnection database;
 
