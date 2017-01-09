@@ -1,31 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using LunchRoulette.Models;
+using Microsoft.Practices.Unity;
 using Xamarin.Forms;
 
 namespace LunchRoulette.Services
 {    
     public class LunchService
     {
-        static LunchDatabase database;
+        static ILunchDatabase database;
 
-        public static LunchDatabase Database
+        public static ILunchDatabase Database { get; private set; }
+
+        public LunchService()
         {
-            get
-            {
-                if (database == null)
-                {
-                    var fileHelper = DependencyService.Get<IFileHelper>();
-                    var file = fileHelper.GetLocalFilePath("LunchSQLite.db3");
-                    if (file != null)
-                    {
-                        database = new LunchDatabase(file);
-                    }
-                }
-                return database;
-            }
-        } 
-    
+            Database = App.Container.Resolve<ILunchDatabase>();
+        }
+
         public async Task<List<Lunch>> GetAll()
         {
             return await Database.GetItemsAsync();

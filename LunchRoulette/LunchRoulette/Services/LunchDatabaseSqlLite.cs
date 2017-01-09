@@ -5,17 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using LunchRoulette.Models;
 using SQLite;
+using Xamarin.Forms;
 
 namespace LunchRoulette.Services
 {
-    public class LunchDatabase : ILunchDatabase
+    public class LunchDatabaseSqlLite : ILunchDatabase
     {
-        private SQLiteAsyncConnection database;
+        private readonly SQLiteAsyncConnection database;
 
-        public LunchDatabase(string dbPath)
+        public LunchDatabaseSqlLite()
         {
-            database = new SQLiteAsyncConnection(dbPath);
-            database.CreateTableAsync<Lunch>().Wait();
+            var fileHelper = DependencyService.Get<IFileHelper>();
+            var file = fileHelper.GetLocalFilePath("LunchSQLite.db3");
+
+            if (file != null)
+            {
+                database = new SQLiteAsyncConnection(file);
+                database.CreateTableAsync<Lunch>().Wait();
+            }
         }
 
         public void DropTable()
