@@ -17,7 +17,7 @@ namespace LunchRoulette.Services
 
         private readonly string googlePlacesApiKey;
 
-        private const string Url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key={0}&location={1},{2}&rankby=distance&type=restaurant&opennow";
+        private const string Url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key={0}&location={1},{2}&rankby=distance&type=restaurant";
 
         public PlacesService()
         {

@@ -46,7 +46,7 @@ namespace LunchRoulette
 
         public void RegisterDependencies()
         {
-            Container.RegisterType<ILunchDatabase, LunchDatabaseFirebase>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ILunchDatabase, LunchDatabaseSqlLite>(new ContainerControlledLifetimeManager());
         }
     }
 }

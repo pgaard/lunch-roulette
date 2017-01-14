@@ -51,18 +51,25 @@ namespace LunchRoulette.Services
         {
             if (!this.authenticated) return new List<Lunch>();
 
-            var response = await this.client.GetAsync(string.Format(firebaseLunchUrl, this.idToken));
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                // a dictionary of objects with a mystery key is returned
-                var stream = await response.Content.ReadAsStringAsync();
-                var dictionary = JsonConvert.DeserializeObject<Dictionary<string, Lunch>>(stream);
-                if (dictionary != null)
+                var response = await this.client.GetAsync(string.Format(firebaseLunchUrl, this.idToken));
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    var list = dictionary.Select(d => d.Value).ToList();
-                    return list;
+                    // a dictionary of objects with a mystery key is returned
+                    var stream = await response.Content.ReadAsStringAsync();
+                    var dictionary = JsonConvert.DeserializeObject<Dictionary<string, Lunch>>(stream);
+                    if (dictionary != null)
+                    {
+                        var list = dictionary.Select(d => d.Value).ToList();
+                        return list;
+                    }
                 }
             }
+            catch (Exception ex)
+            {                
+            }
+
             return new List<Lunch>();
         }
 
