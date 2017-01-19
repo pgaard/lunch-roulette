@@ -97,6 +97,19 @@ namespace LunchRoulette.Views
             this.chowList.IsVisible = true;
         }
 
+        private async Task MigrateSqlToFirebase()
+        {
+            var sqlDb = new LunchDatabaseSqlLite();
+            var list = await sqlDb.GetItemsAsync();
+
+            foreach (var lunch in list)
+            {
+                lunch.Id = Guid.NewGuid().ToString();
+                lunch.GroupId = Config.GroupId.ToString();
+                await lunchService.Add(lunch);
+            }
+        }
+
         private async Task<List<Restaurant>> FilterRestaurants(List<Restaurant> restaurants)
         {
             var stopwords = new[] { "caribou", "brass rail", "executive lounge" };
