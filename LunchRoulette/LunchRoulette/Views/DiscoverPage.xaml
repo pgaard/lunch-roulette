@@ -19,7 +19,7 @@
       <Label x:Name="Winner" TextColor="Red" FontAttributes="Bold" Text="Choose One:" IsVisible="false"></Label>
       <Label x:Name="Counts" FontSize="12" HorizontalOptions="EndAndExpand"></Label>
     </StackLayout>
-    <ListView x:Name="chowList" SeparatorVisibility="None" ItemSelected="Restaurant_Selected" HasUnevenRows="True">      
+    <ListView x:Name="chowList" SeparatorVisibility="None" ItemTapped="Restaurant_Selected" HasUnevenRows="True">      
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>

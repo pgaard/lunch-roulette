@@ -44,14 +44,14 @@ namespace LunchRoulette.Services
             return database.QueryAsync<Lunch>("SELECT * FROM [Lunch] WHERE [Done] = 0");
         }
 
-        public Task<Lunch> GetItemAsync(int id)
+        public Task<Lunch> GetItemAsync(string id)
         {
-            return database.Table<Lunch>().Where(i => i.Id == id).FirstOrDefaultAsync();
+            return database.Table<Lunch>().Where(i => i.Id == id.ToString()).FirstOrDefaultAsync();
         }
 
         public Task<int> SaveItemAsync(Lunch item)
         {
-            if (item.Id != 0)
+            if (!string.IsNullOrEmpty(item.Id))
             {
                 return database.UpdateAsync(item);
             }

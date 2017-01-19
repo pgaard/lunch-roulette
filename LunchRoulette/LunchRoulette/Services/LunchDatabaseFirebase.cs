@@ -14,7 +14,8 @@ namespace LunchRoulette.Services
     public class LunchDatabaseFirebase : ILunchDatabase
     {
         private string authUrl = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={0}";
-        private string firebaseLunchUrl = "https://lunch-f2cf1.firebaseio.com/lunch.json?auth={0}";
+        private string firebaseLunchListUrl = "https://lunch-f2cf1.firebaseio.com/lunch.json?auth={0}";
+        private string firebaseLunchItemUrl = "https://lunch-f2cf1.firebaseio.com/lunch/{0}.json?auth={1}";
         private HttpClient client;
         private GoogleVerifyPassword googleVerifyPassword;
         private string idToken;
@@ -53,10 +54,9 @@ namespace LunchRoulette.Services
 
             try
             {
-                var response = await this.client.GetAsync(string.Format(firebaseLunchUrl, this.idToken));
+                var response = await this.client.GetAsync(string.Format(firebaseLunchListUrl, this.idToken));
                 if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    // a dictionary of objects with a mystery key is returned
+                {                    
                     var stream = await response.Content.ReadAsStringAsync();
                     var dictionary = JsonConvert.DeserializeObject<Dictionary<string, Lunch>>(stream);
                     if (dictionary != null)
@@ -78,21 +78,27 @@ namespace LunchRoulette.Services
             throw new NotImplementedException();
         }
 
-        public Task<Lunch> GetItemAsync(int id)
+        public async Task<Lunch> GetItemAsync(string id)
         {
-
+            var response = await this.client.GetAsync(string.Format(firebaseLunchItemUrl, id, this.idToken));
             throw new NotImplementedException();
         }
 
-        public async Task<int> SaveItemAsync(Lunch item)
+        public async Task<int> SaveItemAsync(Lunch lunch)
         {
             if (!this.authenticated)
             {
                 return 0;
             }
-            
-            var content = new StringContent(JsonConvert.SerializeObject(item));
-            var response = await this.client.PostAsync(string.Format(firebaseLunchUrl, this.idToken), content);
+
+            if (string.IsNullOrEmpty(lunch.Id))
+            {
+                lunch.Id = Guid.NewGuid().ToString();
+            }
+
+            var content = new StringContent(JsonConvert.SerializeObject(lunch));
+        
+            var response = await this.client.PatchAsync(new Uri(string.Format(firebaseLunchItemUrl, lunch.Id, this.idToken)), content);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 return 1;
@@ -100,11 +106,11 @@ namespace LunchRoulette.Services
             return 0;
         }
 
-        public async Task<int> DeleteItemAsync(Lunch item)
+        public async Task<int> DeleteItemAsync(Lunch lunch)
         {
             if (!this.authenticated) return 0;
 
-            var response = await this.client.DeleteAsync(string.Format(firebaseLunchUrl, this.idToken));
+            var response = await this.client.DeleteAsync(string.Format(firebaseLunchItemUrl, lunch.Id, this.idToken));
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

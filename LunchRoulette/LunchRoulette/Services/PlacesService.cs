@@ -18,6 +18,7 @@ namespace LunchRoulette.Services
         private readonly string googlePlacesApiKey;
 
         private const string Url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key={0}&location={1},{2}&rankby=distance&type=restaurant";
+        private const string DetailUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid={1}&key={0}";
 
         public PlacesService()
         {
@@ -42,6 +43,23 @@ namespace LunchRoulette.Services
                 
             }
             return null;
+        }
+
+        public async Task<RestaurantDetail> GetRestaurantDetail(string id)
+        {
+            var response = await this.client.GetAsync(new Uri(string.Format(DetailUrl, this.googlePlacesApiKey, id)));
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var restaurantRoot = JsonConvert.DeserializeObject<RestaurantDetailRootObject>(result);
+                return restaurantRoot.result;
+            }
+            return null;
+        }
+
+        public string PhotoUrl(Photo photo, int maxWidth)
+        {
+            return string.Empty;
         }
     }
 }

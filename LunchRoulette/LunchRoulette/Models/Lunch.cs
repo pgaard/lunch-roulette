@@ -7,8 +7,8 @@ namespace LunchRoulette.Models
     public class Lunch
     {
         [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public Guid UserId { get; set; }
+        public string Id { get; set; }
+        public string GroupId { get; set; }
         public string RestaurantName { get; set; }
         public string Address { get; set; }    
         public string GoogleId { get; set; }

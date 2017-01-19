@@ -9,7 +9,7 @@ namespace LunchRoulette.Services
         void DropTable();
         Task<List<Lunch>> GetItemsAsync();
         Task<List<Lunch>> GetItemsNotDoneAsync();
-        Task<Lunch> GetItemAsync(int id);
+        Task<Lunch> GetItemAsync(string id);
         Task<int> SaveItemAsync(Lunch item);
         Task<int> DeleteItemAsync(Lunch item);
     }

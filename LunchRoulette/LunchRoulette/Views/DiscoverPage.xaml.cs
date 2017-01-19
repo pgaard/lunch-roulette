@@ -64,10 +64,9 @@ namespace LunchRoulette.Views
             this.Winner.IsVisible = false;
             this.chowList.IsVisible = false;
 
-            var restaurants =
-                await
-                    this.service.GetRestaurants(this.MyMap.VisibleRegion.Center.Latitude,
+            var restaurants = await this.service.GetRestaurants(this.MyMap.VisibleRegion.Center.Latitude,
                         this.MyMap.VisibleRegion.Center.Longitude);
+
             if (restaurants != null && restaurants.results.Count > 0)
             {
                 var filtered = await FilterRestaurants(restaurants.results);
@@ -134,31 +133,13 @@ namespace LunchRoulette.Views
             await this.UpdateMap();
         }
 
-        private async void Restaurant_Selected(object sender, SelectedItemChangedEventArgs e)
+        private async void Restaurant_Selected(object sender, ItemTappedEventArgs itemTappedEventArgs)
         {
-            var restaurant = e.SelectedItem as Restaurant;
-           
-            if (restaurant != null)
-            {
-                if (await DisplayAlert("Choose", $"Are we really eating at {restaurant.name}?", "Yes", "No"))
-                {
-                    var lunch = new Lunch()
-                    {
-                        RestaurantName = restaurant.name,
-                        Address = restaurant.vicinity,
-                        GoogleId = restaurant.id,
-                        Date = DateTime.Now.Date
-                    };
-                    var count = await this.lunchService.Add(lunch);
+            (sender as ListView).SelectedItem = null;
 
-                    if (count == 0)
-                    {
-                        await DisplayAlert("Add", "Add failed!", "OK");
-                    }
-                }
+            var restaurant = itemTappedEventArgs.Item as Restaurant;
 
-                // todo deselect
-            }
+            await Application.Current.MainPage.Navigation.PushAsync(new RestaurantDetailPage(restaurant));
         }
     }
 }
