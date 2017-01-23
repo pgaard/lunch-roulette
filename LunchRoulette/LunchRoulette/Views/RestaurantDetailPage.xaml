@@ -3,9 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LunchRoulette.Services.RestaurantDetailPage">
   <StackLayout Padding="20">    
-    <Label Text="{Binding Restaurant.name}"></Label>
-    <Label Text="{Binding Restaurant.vicinity}"></Label>
-    <Label Text="{Binding Restaurant.price_level,StringFormat='Price Level: {0}'}"></Label>
+    <StackLayout Orientation="Horizontal">
+      <Label Text="{Binding Restaurant.formatted_address}"></Label>
+      <Label x:Name="UrlLink" Text="Map" FontAttributes="Bold" TextColor="Blue"></Label>    
+    </StackLayout>
+    <Label Text="{Binding Restaurant.formatted_phone_number}"></Label>    
     <Button Text="Eat Here" Clicked="Button_OnClicked"></Button>
+    <ListView ItemsSource="{Binding Restaurant.photos}"  HasUnevenRows="true">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <Image Margin="5" Source="{Binding ImageSource}"
+               HorizontalOptions="Center"
+               Aspect="AspectFill"
+               RelativeLayout.WidthConstraint="{ConstraintExpression
+				          Type=RelativeToParent,
+				          Property=Width,
+				          Factor=1}">
+            </Image>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+    <ListView ItemsSource="{Binding Restaurant.reviews}" HasUnevenRows="true" SeparatorColor="Black">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout>
+              <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding author_name}" FontAttributes="Bold"/>
+                <Label Text="{Binding relative_time_description}"/>
+              </StackLayout>
+              <Label Text="{Binding rating, StringFormat='Rating {0}'}"/>
+              <Label Text="{Binding text}"/>
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
   </StackLayout>
 </ContentPage>

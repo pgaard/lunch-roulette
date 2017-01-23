@@ -14,7 +14,7 @@ namespace LunchRoulette.Views
 
     public partial class DiscoverPage : ContentPage
     {
-        private PlacesService service;
+        private PlacesService placesService;
         private LunchService lunchService;
 
         public ObservableCollection<Restaurant> Restaurants;
@@ -22,7 +22,7 @@ namespace LunchRoulette.Views
 
         public DiscoverPage()
         {
-            this.service = new PlacesService();
+            this.placesService = new PlacesService();
             this.lunchService = new LunchService();
             InitializeComponent();
 
@@ -64,7 +64,7 @@ namespace LunchRoulette.Views
             this.Winner.IsVisible = false;
             this.chowList.IsVisible = false;
 
-            var restaurants = await this.service.GetRestaurants(this.MyMap.VisibleRegion.Center.Latitude,
+            var restaurants = await this.placesService.GetRestaurants(this.MyMap.VisibleRegion.Center.Latitude,
                         this.MyMap.VisibleRegion.Center.Longitude);
 
             if (restaurants != null && restaurants.results.Count > 0)
@@ -80,10 +80,10 @@ namespace LunchRoulette.Views
                 {
                     MyMap.Pins.Add(new Pin()
                     {
-                        Position =
-                            new Position(winner.geometry.location.lat, winner.geometry.location.lng),
+                        Position = new Position(winner.geometry.location.lat, winner.geometry.location.lng),
                         Label = winner.name,
-                        Type = PinType.Place
+                        Type = PinType.SearchResult,
+                        Address = winner.vicinity,
                     });
                 }
 
@@ -152,7 +152,11 @@ namespace LunchRoulette.Views
 
             var restaurant = itemTappedEventArgs.Item as Restaurant;
 
-            await Application.Current.MainPage.Navigation.PushAsync(new RestaurantDetailPage(restaurant));
+            var detail = await this.placesService.GetRestaurantDetail(restaurant.place_id);
+            if (detail != null)
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new RestaurantDetailPage(detail));
+            }
         }
     }
 }

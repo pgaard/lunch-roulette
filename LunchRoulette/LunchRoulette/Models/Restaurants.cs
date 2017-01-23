@@ -1,4 +1,7 @@
-﻿namespace LunchRoulette.Models
+﻿using System.Dynamic;
+using Xamarin.Forms;
+
+namespace LunchRoulette.Models
 {
     using System.Collections.Generic;
 
@@ -44,6 +47,7 @@
         public List<string> html_attributions { get; set; }
         public string photo_reference { get; set; }
         public int width { get; set; }
+        public ImageSource ImageSource { get; set; }
     }
 
     public class Restaurant
