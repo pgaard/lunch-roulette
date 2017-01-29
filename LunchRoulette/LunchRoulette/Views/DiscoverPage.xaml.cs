@@ -73,7 +73,8 @@ namespace LunchRoulette.Views
 
                 this.Counts.Text = $"{filtered.Count} restaurants left out of {restaurants.results.Count}";                
 
-                var winners = GetRandomRestaurants(filtered, 3);
+                //var winners = GetRandomRestaurants(filtered, 3);
+                var winners = filtered;
 
                 MyMap.Pins.Clear();
                 foreach (var winner in winners)
@@ -89,6 +90,7 @@ namespace LunchRoulette.Views
 
                 this.Restaurants = new ObservableCollection<Restaurant>(winners);
                 chowList.ItemsSource = this.Restaurants;
+                chowList.ScrollTo(winners.First(), ScrollToPosition.Start, false);
             }
 
             this.Spinner.IsRunning = false;

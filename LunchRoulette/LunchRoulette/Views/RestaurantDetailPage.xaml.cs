@@ -13,12 +13,13 @@ namespace LunchRoulette.Services
         private string PlacesPhotoApiUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth={0}&photoreference={1}&key={2}";
         private readonly LunchService lunchService;
         public RestaurantDetail Restaurant { get; set; }
+        public bool ShowImages { get; set; }
 
         public RestaurantDetailPage(RestaurantDetail restaurant)
         {
             this.lunchService = new LunchService();
             this.Restaurant = restaurant;
-            this.Title = restaurant.name;
+            this.Title = restaurant.name;            
 
             if (restaurant.photos != null && restaurant.photos.Count > 0)
             {
@@ -30,7 +31,8 @@ namespace LunchRoulette.Services
                         CachingEnabled = true
                     };
                 }
-            }
+                this.ShowImages = true;
+            }            
                     
             this.BindingContext = this;
             this.InitializeComponent();

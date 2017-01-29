@@ -25,7 +25,7 @@ namespace LunchRoulette
             {
                 var lunches = await this.lunchService.GetAll();
                 this.Lunches = new ObservableCollection<Lunch>(lunches);
-                this.LunchList.ItemsSource = this.Lunches.OrderBy(l => l.Date);
+                this.LunchList.ItemsSource = this.Lunches.OrderByDescending(l => l.Date);
             }
             catch (Exception ex)
             {

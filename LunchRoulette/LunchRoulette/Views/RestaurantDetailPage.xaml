@@ -9,17 +9,13 @@
     </StackLayout>
     <Label Text="{Binding Restaurant.formatted_phone_number}"></Label>    
     <Button Text="Eat Here" Clicked="Button_OnClicked"></Button>
-    <ListView ItemsSource="{Binding Restaurant.photos}"  HasUnevenRows="true">
+    <ListView ItemsSource="{Binding Restaurant.photos}"  HasUnevenRows="true" IsVisible="{Binding showImages}">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
             <Image Margin="5" Source="{Binding ImageSource}"
                HorizontalOptions="Center"
-               Aspect="AspectFill"
-               RelativeLayout.WidthConstraint="{ConstraintExpression
-				          Type=RelativeToParent,
-				          Property=Width,
-				          Factor=1}">
+               Aspect="Fill">
             </Image>
           </ViewCell>
         </DataTemplate>
