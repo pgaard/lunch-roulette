@@ -17,7 +17,10 @@ namespace LunchRoulette.Services
 
         private readonly string googlePlacesApiKey;
 
+        public static bool FindRestaurantsOnly = true;
+
         private const string Url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key={0}&location={1},{2}&rankby=distance&type=restaurant";
+        private const string UrlAny = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key={0}&location={1},{2}&rankby=distance";
         private const string DetailUrl = "https://maps.googleapis.com/maps/api/place/details/json?placeid={1}&key={0}";
 
         public PlacesService()
@@ -26,11 +29,11 @@ namespace LunchRoulette.Services
             googlePlacesApiKey = Config.GooglePlacesApiKey;
         }
 
-        public async Task<Restaurants> GetRestaurants(double latitude = 44.9135599, double longitude = -93.21555699999999)
+        public async Task<Restaurants> GetRestaurants(double latitude, double longitude)
         {
             try
             {
-                var response = await this.client.GetAsync(new Uri(String.Format(Url, this.googlePlacesApiKey, latitude, longitude)));
+                var response = await this.client.GetAsync(new Uri(String.Format(FindRestaurantsOnly ? Url : UrlAny, this.googlePlacesApiKey, latitude, longitude)));
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     var result = await response.Content.ReadAsStringAsync();
@@ -47,7 +50,7 @@ namespace LunchRoulette.Services
 
         public async Task<RestaurantDetail> GetRestaurantDetail(string id)
         {
-            var response = await this.client.GetAsync(new Uri(string.Format(DetailUrl, this.googlePlacesApiKey, id)));
+            var response = await this.client.GetAsync(new Uri(String.Format(DetailUrl, this.googlePlacesApiKey, id)));
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var result = await response.Content.ReadAsStringAsync();
@@ -59,7 +62,7 @@ namespace LunchRoulette.Services
 
         public string PhotoUrl(Photo photo, int maxWidth)
         {
-            return string.Empty;
+            return String.Empty;
         }
     }
 }

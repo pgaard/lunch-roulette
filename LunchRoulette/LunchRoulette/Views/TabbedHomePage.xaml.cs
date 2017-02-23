@@ -33,5 +33,12 @@ namespace LunchRoulette.Views
         {
             // TODO
         }
+
+        private void Everything_Clicked(object sender, EventArgs e)
+        {
+            
+            PlacesService.FindRestaurantsOnly = !PlacesService.FindRestaurantsOnly;
+            (sender as ToolbarItem).Text = PlacesService.FindRestaurantsOnly ? "Search Restaurants" : "Search Everything";
+        }
     }
 }

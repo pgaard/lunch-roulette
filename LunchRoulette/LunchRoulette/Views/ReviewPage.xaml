@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LunchRoulette.Views.ReviewPage">
+  <StackLayout>
+    <ListView ItemsSource="{Binding Restaurant.reviews}" HasUnevenRows="true" SeparatorColor="Black">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout Margin="10,5,10,5">
+              <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding author_name}" FontAttributes="Bold"/>
+                <Label Text="{Binding relative_time_description}"/>
+              </StackLayout>
+              <Label Text="{Binding rating, StringFormat='Rating {0}'}"/>
+              <Label Text="{Binding text}"/>
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackLayout>
+</ContentPage>

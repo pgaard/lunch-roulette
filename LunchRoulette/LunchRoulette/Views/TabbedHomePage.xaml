@@ -5,6 +5,7 @@
              Title="Lunch Roulette">
   <TabbedPage.ToolbarItems>
     <ToolbarItem Text="Manual Entry" Clicked="Manual_Clicked" Order="Secondary"></ToolbarItem>
+    <ToolbarItem Text="Search Restaurants" Clicked="Everything_Clicked" Order="Secondary"></ToolbarItem>
     <!--<ToolbarItem Text="Clear All Data" Clicked="Clear_Clicked" Order="Secondary"></ToolbarItem>-->
   </TabbedPage.ToolbarItems>
 </TabbedPage>

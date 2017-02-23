@@ -19,7 +19,6 @@ namespace LunchRoulette.Views
 
         public ObservableCollection<Restaurant> Restaurants;
 
-
         public DiscoverPage()
         {
             this.placesService = new PlacesService();
@@ -149,7 +148,7 @@ namespace LunchRoulette.Views
         }
 
         private async void Restaurant_Selected(object sender, ItemTappedEventArgs itemTappedEventArgs)
-        {
+        { 
             (sender as ListView).SelectedItem = null;
 
             var restaurant = itemTappedEventArgs.Item as Restaurant;

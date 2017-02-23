@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LunchRoulette.Models;
+using LunchRoulette.Views;
 using Xamarin.Forms;
 
 namespace LunchRoulette.Services
@@ -37,11 +38,18 @@ namespace LunchRoulette.Services
             this.BindingContext = this;
             this.InitializeComponent();
 
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (s, e) => {
+            var tapMapGestureRecognizer = new TapGestureRecognizer();
+            tapMapGestureRecognizer.Tapped += (s, e) => {
                 Device.OpenUri(new Uri(restaurant.url));
             };
-            this.UrlLink.GestureRecognizers.Add(tapGestureRecognizer);
+            this.UrlLink.GestureRecognizers.Add(tapMapGestureRecognizer);
+
+            var tapReviewGestureRecognizer = new TapGestureRecognizer();
+            tapReviewGestureRecognizer.Tapped += (s, e) => {
+                Application.Current.MainPage.Navigation.PushAsync(new ReviewPage(this.Restaurant));
+            };
+            this.ReviewLink.GestureRecognizers.Add(tapReviewGestureRecognizer);
+
         }
 
         private async void Button_OnClicked(object sender, EventArgs e)

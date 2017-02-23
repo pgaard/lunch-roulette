@@ -3,39 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LunchRoulette.Services.RestaurantDetailPage">
   <StackLayout Padding="20">    
-    <StackLayout Orientation="Horizontal">
-      <Label Text="{Binding Restaurant.formatted_address}"></Label>
-      <Label x:Name="UrlLink" Text="Map" FontAttributes="Bold" TextColor="Blue"></Label>    
-    </StackLayout>
-    <Label Text="{Binding Restaurant.formatted_phone_number}"></Label>    
-    <Button Text="Eat Here" Clicked="Button_OnClicked"></Button>
+    <StackLayout Orientation="Vertical">
+      <Label Text="{Binding Restaurant.formatted_address}" HeightRequest="30"></Label>
+      <Label x:Name="UrlLink" Text="Map" FontAttributes="Bold" TextColor="Blue"></Label>
+      <Label x:Name="ReviewLink" Text="Reviews" FontAttributes="Bold" TextColor="Blue"></Label>
+    </StackLayout>    
+    <Button Text="Eat Here" Clicked="Button_OnClicked" HorizontalOptions="Center" WidthRequest="300"></Button>
     <ListView ItemsSource="{Binding Restaurant.photos}"  HasUnevenRows="true" IsVisible="{Binding showImages}">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
-            <Image Margin="5" Source="{Binding ImageSource}"
-               HorizontalOptions="Center"
-               Aspect="Fill">
-            </Image>
-          </ViewCell>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
-    <ListView ItemsSource="{Binding Restaurant.reviews}" HasUnevenRows="true" SeparatorColor="Black">
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <ViewCell>
-            <StackLayout>
-              <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding author_name}" FontAttributes="Bold"/>
-                <Label Text="{Binding relative_time_description}"/>
-              </StackLayout>
-              <Label Text="{Binding rating, StringFormat='Rating {0}'}"/>
-              <Label Text="{Binding text}"/>
+            <StackLayout Padding="0,0,0,5">
+              <Image Margin="5" Source="{Binding ImageSource}"
+                  HorizontalOptions="FillAndExpand"
+                  VerticalOptions="FillAndExpand"
+                  Aspect="AspectFill">
+              </Image>
             </StackLayout>
           </ViewCell>
         </DataTemplate>
       </ListView.ItemTemplate>
-    </ListView>
+    </ListView>    
   </StackLayout>
 </ContentPage>
