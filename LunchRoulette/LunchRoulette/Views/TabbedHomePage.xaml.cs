@@ -31,7 +31,7 @@ namespace LunchRoulette.Views
 
         private async void Manual_Clicked(object sender, EventArgs e)
         {
-            // TODO
+            await Application.Current.MainPage.Navigation.PushAsync(new ManualEntryPage());
         }
 
         private void Everything_Clicked(object sender, EventArgs e)
