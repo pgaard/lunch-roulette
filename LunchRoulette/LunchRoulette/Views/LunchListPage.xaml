@@ -4,7 +4,7 @@
              x:Class="LunchRoulette.LunchListPage"
              Title="History">
   <StackLayout Padding="10">
-    <ListView x:Name="LunchList">
+    <ListView x:Name="LunchList" ItemTapped="LunchList_OnItemTapped">
       <ListView.RowHeight>40</ListView.RowHeight>
       <ListView.ItemTemplate>
         <DataTemplate>          

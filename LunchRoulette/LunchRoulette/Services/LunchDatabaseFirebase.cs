@@ -118,5 +118,20 @@ namespace LunchRoulette.Services
             }
             return 0;
         }
+
+        public async Task<int> UpdateItemAsync(Lunch lunch)
+        {
+            if (!this.authenticated) return 0;
+
+            var content = new StringContent(JsonConvert.SerializeObject(lunch));
+
+            var response = await this.client.PatchAsync(new Uri(string.Format(firebaseLunchItemUrl, lunch.Id, this.idToken)), content);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return 1;
+            }
+            return 0;
+        }
     }
 }

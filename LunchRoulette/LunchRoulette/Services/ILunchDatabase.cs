@@ -12,5 +12,6 @@ namespace LunchRoulette.Services
         Task<Lunch> GetItemAsync(string id);
         Task<int> SaveItemAsync(Lunch item);
         Task<int> DeleteItemAsync(Lunch item);
+        Task<int> UpdateItemAsync(Lunch lunch);
     }
 }

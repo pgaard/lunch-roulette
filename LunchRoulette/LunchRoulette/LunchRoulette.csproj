@@ -42,6 +42,9 @@
     <Compile Include="Services\HttpClientExtensions.cs" />
     <Compile Include="Services\ILunchDatabase.cs" />
     <Compile Include="Services\LunchDatabaseFirebase.cs" />
+    <Compile Include="Views\LunchDetailPage.xaml.cs">
+      <DependentUpon>LunchDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ManualEntryPage.xaml.cs">
       <DependentUpon>ManualEntryPage.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ManualEntryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\LunchDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

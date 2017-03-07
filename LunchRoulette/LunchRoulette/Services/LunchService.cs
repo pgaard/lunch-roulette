@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using LunchRoulette.Models;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json.Converters;
 using Xamarin.Forms;
 
 namespace LunchRoulette.Services
@@ -36,6 +37,11 @@ namespace LunchRoulette.Services
         public async Task Delete(Lunch lunch)
         {
             await Database.DeleteItemAsync(lunch);
+        }
+
+        public async Task Update(Lunch lunch)
+        {
+            await Database.UpdateItemAsync(lunch);
         }
     }
 }

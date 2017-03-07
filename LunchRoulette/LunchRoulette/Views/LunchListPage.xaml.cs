@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LunchRoulette.Models;
 using LunchRoulette.Services;
+using LunchRoulette.Views;
 using Xamarin.Forms;
 
 namespace LunchRoulette
@@ -49,6 +50,15 @@ namespace LunchRoulette
                 var deleted = this.Lunches.FirstOrDefault(l => l.Id == lunch.Id);
                 this.Lunches.Remove(deleted);
             }
+        }
+
+        private async void LunchList_OnItemTapped(object sender, ItemTappedEventArgs itemTappedEventArgs)
+        {
+            (sender as ListView).SelectedItem = null;
+
+            var lunch = itemTappedEventArgs.Item as Lunch;
+
+            await Application.Current.MainPage.Navigation.PushAsync(new LunchDetailPage(lunch));
         }
     }
 }

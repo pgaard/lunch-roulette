@@ -65,5 +65,10 @@ namespace LunchRoulette.Services
         {
             return database.DeleteAsync(item);
         }
+
+        public Task<int> UpdateItemAsync(Lunch lunch)
+        {
+            return database.UpdateAsync(lunch);
+        }
     }
 }

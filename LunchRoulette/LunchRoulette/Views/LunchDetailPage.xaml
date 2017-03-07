@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LunchRoulette.Views.LunchDetailPage">
+    <StackLayout Margin="15">
+        <Label>Name:</Label>
+        <Label Text="{Binding RestaurantName}"></Label>
+        <Label>Address:</Label>
+        <Label Text="{Binding Address}"></Label>
+        <Label>Date:</Label>
+        <DatePicker Date="{Binding Date}"></DatePicker>
+        <StackLayout Orientation="Horizontal">
+            <Label>Rating: </Label>
+            <Label BindingContext="{x:Reference scaleSlider}" Text="{Binding Value}"></Label>
+        </StackLayout>
+        <Slider x:Name="scaleSlider" Minimum="0" Maximum="5" Value="{Binding Rating, Mode=TwoWay}"  ValueChanged="Slider_OnValueChanged"></Slider>
+        <Button Text="Save" Clicked="Save_OnClicked"></Button>
+    </StackLayout>
+</ContentPage>
