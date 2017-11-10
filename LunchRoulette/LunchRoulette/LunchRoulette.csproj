@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Converters\NonZeroValueConverter.cs" />
     <Compile Include="Models\GoogleVerifyPassword.cs" />
     <Compile Include="Models\RestaurantDetail.cs" />
     <Compile Include="Services\HttpClientExtensions.cs" />

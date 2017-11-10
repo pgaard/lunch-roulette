@@ -41,7 +41,9 @@ namespace LunchRoulette.Views
         {
             var newStep = Math.Round(e.NewValue / StepValue);
 
-            Lunch.Rating = newStep * StepValue;        
+            Lunch.Rating = newStep * StepValue;
+
+            this.ratingText.Text = Lunch.Rating.ToString("0.00");
         }
     }
 }

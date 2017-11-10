@@ -4,7 +4,7 @@
              x:Class="LunchRoulette.LunchListPage"
              Title="History">
   <StackLayout Padding="10">
-    <ListView x:Name="LunchList" ItemTapped="LunchList_OnItemTapped">
+    <ListView x:Name="LunchList" ItemTapped="LunchList_OnItemTapped" HasUnevenRows="True">
       <ListView.RowHeight>40</ListView.RowHeight>
       <ListView.ItemTemplate>
         <DataTemplate>          
@@ -13,11 +13,14 @@
               <MenuItem Text="Delete" Clicked="Delete_Lunch" CommandParameter="{Binding .}"></MenuItem>
             </ViewCell.ContextActions>
             <StackLayout Orientation="Horizontal">
-              <Label Text="{Binding Date, StringFormat='{0:d}'}" MinimumWidthRequest="100" FontSize="12"></Label>
-              <StackLayout Orientation="Vertical">
-                <Label Text="{Binding RestaurantName}" FontAttributes="Bold"></Label>
-                <Label Text="{Binding Address}" FontSize="12"></Label>
-              </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="{Binding Date, StringFormat='{0:d}'}" MinimumWidthRequest="100" FontSize="12"></Label>
+                    <Label Text="{Binding Rating}" TextColor="Green"></Label>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="{Binding RestaurantName}" FontAttributes="Bold"></Label>
+                                <Label Text="{Binding Address}" FontSize="12"></Label>
+                            </StackLayout>
             </StackLayout> 
           </ViewCell>
         </DataTemplate>

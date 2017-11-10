@@ -12,7 +12,8 @@ namespace LunchRoulette.Models
         public string RestaurantName { get; set; }
         public string Address { get; set; }    
         public string GoogleId { get; set; }
-        public double Rating { get; set; }
+        public double Rating { get; set; }        
         public DateTime Date { get; set; }
+        public string Comments { get; set; }
     }
 }
